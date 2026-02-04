@@ -1,0 +1,46 @@
+name: Update Collector
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+          cache: true
+
+      - name: Install yq
+        run: |
+          if ! command -v yq &> /dev/null; then
+            sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
+            sudo chmod +x /usr/bin/yq
+          fi
+
+      - name: Run update script
+        run: bash scripts/update-collector.sh
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: update collector to latest versions"
+          title: "Update Collector to Latest Versions"
+          body: |
+            This PR updates the collector components and builder to the latest available versions.
+            - Matches `otelcol-k8s` distribution
+            - Includes `elasticsearchreceiver` from `otelcol-contrib`
+          branch: update-collector
+          delete-branch: true
+          base: main
