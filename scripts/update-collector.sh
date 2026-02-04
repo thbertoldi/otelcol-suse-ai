@@ -51,7 +51,10 @@ sed -i "s|builder@v[0-9.]*|builder@$LATEST_TAG|g" Containerfile
 echo "Installing builder..."
 go install "go.opentelemetry.io/collector/cmd/builder@$LATEST_TAG"
 
-echo "Running builder..."
-$(go env GOPATH)/bin/builder --config builder-config.yaml
+echo "Running builder (skipping compilation)..."
+$(go env GOPATH)/bin/builder --config builder-config.yaml --skip-compilation
+
+# Clean up any leftover binary just in case
+rm -f ./otelcol-suse-ai/otelcol-suse-ai
 
 echo "Update process completed successfully."

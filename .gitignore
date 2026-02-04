@@ -1,0 +1,11 @@
+# Binaries
+otelcol-suse-ai/otelcol-suse-ai
+otelcol-suse-ai/otelcol-suse-ai_windows_amd64.exe
+otelcol-suse-ai/otelcol-suse-ai_darwin_amd64
+otelcol-suse-ai/otelcol-suse-ai_linux_amd64
+
+# Go
+vendor/
+*.exe
+*.test
+*.out
