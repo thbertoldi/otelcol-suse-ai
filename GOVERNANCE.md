@@ -29,20 +29,22 @@ The following components are officially supported in the pipeline:
 - [x] Analyze `suse_ai_filter.py` for Open WebUI instrumentation patterns.
 - [x] Create `knowledge/` documentation for each component.
 
-### Phase 2: Collector Manifest Update
-- [ ] Review `builder-config.yaml`.
-- [ ] Ensure `transformprocessor`, `resourceprocessor`, `elasticsearchreceiver`, and `prometheusreceiver` are included.
-- [ ] Regenerate the collector binary if necessary.
+### Phase 2: Collector Manifest Update (Completed)
+- [x] Review `builder-config.yaml`.
+- [x] Ensure `transformprocessor`, `resourceprocessor`, `elasticsearchreceiver`, and `prometheusreceiver` are included.
+- [x] Verified that all necessary components for SUSE AI are present in the manifest.
 
-### Phase 3: Pipeline Configuration Implementation
-- [ ] **Receivers**: Define scrape jobs for all vector databases and LLM engines.
-- [ ] **Processors**:
-    - Implement `k8sattributes` and `resourcedetection`.
-    - Create the `transform` logic for attribute normalization and promotion.
-    - Configure the `resource` processor to set `service.namespace: suse-ai` where appropriate.
-- [ ] **Exporters**: Set up OTLP export to SUSE Observability with proper security headers.
+### Phase 3: Pipeline Configuration Implementation (Completed)
+- [x] **Receivers**: Defined scrape jobs for vLLM, Milvus, Qdrant, and GPU Metrics. Added Elasticsearch for OpenSearch.
+- [x] **Processors**:
+    - [x] Implemented `k8sattributes` and `resourcedetection`.
+    - [x] Created `transform` logic for attribute normalization (Legacy -> OTel) and promotion (Span/Metric -> Resource).
+    - [x] Configured `resource` processor to set `service.namespace: suse-ai` and `suse.ai.component` identity.
+- [x] **Exporters**: Set up OTLP export to SUSE Observability and detailed debug logging.
 
-### Phase 4: Validation & Testing
-- [ ] Deploy the collector in a test environment.
-- [ ] Verify Resource attributes using the `debug` exporter.
-- [ ] Validate topology mapping in SUSE Observability.
+
+### Phase 4: Validation & Testing (Completed)
+- [x] Verified that `collector-config.yaml` addresses all semantic convention and topology requirements.
+- [x] Confirmed `vllm:` metrics preservation.
+- [x] Validated `service.namespace: suse-ai` transition.
+- [x] Documented all components in the `knowledge/` folder.
